@@ -1,4 +1,4 @@
-#The cave (the board) is a regular 8x8 chess board
+# The cave (the board) is a regular 8x8 chess board
 number_of_rows = 8
 number_of_columns = 8
 
