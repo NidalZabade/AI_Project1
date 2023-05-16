@@ -22,7 +22,7 @@ def display_cave():
 
     #Print the row numbers in reversed order (just
     for row in reversed (range(number_of_rows)):
-        #Print row number (end=' ' => to ensure that the next print statment co
+        #Print row number (end=' ' => to ensure that the next print statment continues on the same line)
         print(row + 1, end=' ')
 
         for column in range (number_of_columns):
@@ -34,3 +34,36 @@ def display_cave():
     print(column_labels)
 
 display_cave()
+
+#Check for a win
+def check_win(player):
+   #Check rows
+   for row in range(number_of_rows):
+       for column in range(number_of_columns - 4):
+           #Check if there are 5 consecutive bricks for the same player in a row
+           if all(Cave[row][column + i] == player for i in range (5)):
+              return True
+
+   #Check columns
+   for column in range(number_of_columns):
+       for row in range(number_of_rows - 4):
+           #Check if there are 5 consecutive bricks for the same player in a column
+           if all(Cave[row + i][column] == player for i in range (5)):
+              return True
+
+   #Check top-left to bottom-right diagonal
+   for row in range(number_of_rows - 4):
+       for column in range(number_of_columns - 4):
+           #Check if there are 5 consecutive bricks for the same player in a top-left to bottom-right diagonal
+           if all(Cave[row + i][column + i] == player for i in range (5)):
+              return True
+
+   # Check top-right to bottom-left diagonal
+   for row in range(number_of_rows - 4):
+       for column in range(4, number_of_columns):
+       #Check if there are 5 consecutive bricks for the same player in a top-left to bottom-right diagonal
+           if all(Cave[row][column - i] == player for i in range (5)):
+              return True
+
+   #No win condition found
+   return False
