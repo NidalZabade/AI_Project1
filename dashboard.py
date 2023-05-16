@@ -33,7 +33,6 @@ def display_cave():
     #Print column labels again
     print(column_labels)
 
-display_cave()
 
 #Check for a win
 def check_win(player):
@@ -77,13 +76,15 @@ def check_draw():
     return True
 
 def is_valid_move(move):
-    # a move is valid if it is a letter followed by a number, in the range A1-H8, the corresponding cell is empty and has a brick on the left or right of it
+    # a move is valid if it is a letter followed by a number
     if len(move) != 2:
         return False
     
     column = move[0]
     row = move[1]
     
+    
+    # in the range A1-H8,
     if column < 'A' or column > 'H':
         return False
     
@@ -93,13 +94,20 @@ def is_valid_move(move):
     column = ord(column) - ord('A')
     row = int(row) - 1
     
+    # the corresponding cell is empty 
     if Cave[row][column] != ' ':
         return False
     
-    if column > 0 and Cave[row][column - 1] == ' ':
+    # if the column is A or H, then the brick can be placed anywhere in that column
+    if column == 0 or column == 7:
         return True
     
-    if column < number_of_columns - 1 and Cave[row][column + 1] == ' ':
+    #has a brick on the left directly
+    if column > 0 and Cave[row][column - 1] != ' ':
+        return True
+    
+    #has a brick on the right directly
+    if column < number_of_columns - 1 and Cave[row][column + 1] != ' ':
         return True
     
     return False
@@ -126,4 +134,3 @@ def enter_move(player):
 
     #Update the cave (the board) with the move
     update_cave(move, player)
-    
