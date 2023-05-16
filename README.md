@@ -4,7 +4,7 @@
 
 - [x] Create Dashboard
 - [x] Check winning condition
-- [ ] Check valid move
+- [x] Check valid move
 - [x] Check draw condition
 - [ ] Create two player mode
 - [ ] Implement Minimax
