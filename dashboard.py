@@ -67,3 +67,12 @@ def check_win(player):
 
    #No win condition found
    return False
+
+def check_draw():
+    #Check if all cells are occupied and no win condition is met
+    for row in range(number_of_rows):
+        for column in range(number_of_columns):
+            if Cave[row][column] == ' ':
+                return False
+    return True
+

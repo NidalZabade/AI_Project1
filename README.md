@@ -5,7 +5,7 @@
 - [x] Create Dashboard
 - [x] Check winning condition
 - [ ] Check valid move
-- [ ] Check draw condition
+- [x] Check draw condition
 - [ ] Create two player mode
 - [ ] Implement Minimax
 - [ ] Implement Alpha-Beta Pruning
