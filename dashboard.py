@@ -69,10 +69,61 @@ def check_win(player):
    return False
 
 def check_draw():
-    #Check if all cells are occupied and no win condition is met
+    #Check if all cells are occupied
     for row in range(number_of_rows):
         for column in range(number_of_columns):
             if Cave[row][column] == ' ':
                 return False
     return True
 
+def is_valid_move(move):
+    # a move is valid if it is a letter followed by a number, in the range A1-H8, the corresponding cell is empty and has a brick on the left or right of it
+    if len(move) != 2:
+        return False
+    
+    column = move[0]
+    row = move[1]
+    
+    if column < 'A' or column > 'H':
+        return False
+    
+    if row < '1' or row > '8':
+        return False
+    
+    column = ord(column) - ord('A')
+    row = int(row) - 1
+    
+    if Cave[row][column] != ' ':
+        return False
+    
+    if column > 0 and Cave[row][column - 1] == ' ':
+        return True
+    
+    if column < number_of_columns - 1 and Cave[row][column + 1] == ' ':
+        return True
+    
+    return False
+
+def update_cave(move, player):
+    #Update the cave (the board) with the move
+    column = move[0]
+    row = move[1]
+
+    column = ord(column) - ord('A')
+    row = int(row) - 1
+
+    Cave[row][column] = player
+
+
+def enter_move(player):
+    #Ask the player to enter a move
+    move = input(f"Player {player}, enter your move: ")
+
+    #Check if the move is valid
+    while not is_valid_move(move):
+        #Ask the player to enter a valid move
+        move = input(f"Player {player}, enter a valid move: ")
+
+    #Update the cave (the board) with the move
+    update_cave(move, player)
+    
