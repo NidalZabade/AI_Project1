@@ -78,6 +78,7 @@ def check_draw():
 def is_valid_move(move):
     # a move is valid if it is a letter followed by a number
     if len(move) != 2:
+        print("The move should be a letter followed by a number (e.g. A1)")
         return False
     
     column = move[0]
@@ -86,6 +87,7 @@ def is_valid_move(move):
     
     # in the range A1-H8,
     if column < 'A' or column > 'H':
+        print("The column should be in the range A-H")
         return False
     
     if row < '1' or row > '8':
@@ -96,6 +98,7 @@ def is_valid_move(move):
     
     # the corresponding cell is empty 
     if Cave[row][column] != ' ':
+        print("The cell is not empty")
         return False
     
     # if the column is A or H, then the brick can be placed anywhere in that column
@@ -110,6 +113,7 @@ def is_valid_move(move):
     if column < number_of_columns - 1 and Cave[row][column + 1] != ' ':
         return True
     
+    print("The brick should be placed next to another brick")
     return False
 
 def update_cave(move, player):
@@ -134,3 +138,11 @@ def enter_move(player):
 
     #Update the cave (the board) with the move
     update_cave(move, player)
+
+def play_game():
+    while True:
+        display_cave()
+        enter_move('X')
+        
+        
+play_game()
