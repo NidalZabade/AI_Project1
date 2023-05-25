@@ -3,7 +3,7 @@ from dashboard import display_cave, Cave, is_valid_move, check_win, check_draw
 
 # manual entry for both ■’s moves and □’s moves
 def manual_entry_for_both():
-    # ■ starts, followed by □, then ■ again,then □ again, ...
+    # □ starts, followed by ■, then □ again,then ■ again, ...
     current_player = '□'
     while True:
         # Display the board
