@@ -138,11 +138,3 @@ def enter_move(player):
 
     #Update the cave (the board) with the move
     update_cave(move, player)
-
-def play_game():
-    while True:
-        display_cave()
-        enter_move('X')
-        
-        
-play_game()
