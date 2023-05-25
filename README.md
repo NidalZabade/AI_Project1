@@ -6,7 +6,7 @@
 - [x] Check winning condition
 - [x] Check valid move
 - [x] Check draw condition
-- [ ] Create two player mode
+- [x] Create two player mode
 - [ ] Implement Minimax
 - [ ] Implement Alpha-Beta Pruning
 - [ ] Implement Heuristic
