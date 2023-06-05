@@ -1,18 +1,11 @@
+import numpy as np
+
 #The cave (the board) is a regular 8x8 chess board
 number_of_rows = 8
 number_of_columns = 8
 
 #Initialize the cave (the board) with empty spaces (Initially its Empty)
-Cave = []
-
-for row_num in range (number_of_rows):
-    row = []
-
-    for column_num in range(number_of_columns):
-        cell = ' ' #Empty cell
-        row.append(cell) #Add the cell to the current row
-
-    Cave.append(row) #Add the row to the cave (the board)
+Cave = np.full((number_of_rows, number_of_columns), ' ')
 
 #Display the cave (the board)
 def display_cave():
@@ -20,9 +13,9 @@ def display_cave():
     column_labels = "   A   B   C   D   E   F   G   H"
     print(column_labels)
 
-    #Print the row numbers in reversed order (just
+    #Print the row numbers in reversed order
     for row in reversed (range(number_of_rows)):
-        #Print row number (end=' ' => to ensure that the next print statment continues on the same line)
+        #Print row number (end=' ' => to ensure that the next print statement continues on the same line)
         print(row + 1, end=' ')
 
         for column in range (number_of_columns):
@@ -32,53 +25,39 @@ def display_cave():
         print(row + 1)
     #Print column labels again
     print(column_labels)
-
-
+    
 #Check for a win
 def check_win(player):
-   #Check rows
-   for row in range(number_of_rows):
-       for column in range(number_of_columns - 4):
-           #Check if there are 5 consecutive bricks for the same player in a row
-           if all(Cave[row][column + i] == player for i in range (5)):
-              return True
-
-   #Check columns
-   for column in range(number_of_columns):
-       for row in range(number_of_rows - 4):
-           #Check if there are 5 consecutive bricks for the same player in a column
-           if all(Cave[row + i][column] == player for i in range (5)):
-              return True
-
-   #Check top-left to bottom-right diagonal
-   for row in range(number_of_rows - 4):
-       for column in range(number_of_columns - 4):
-           #Check if there are 5 consecutive bricks for the same player in a top-left to bottom-right diagonal
-           if all(Cave[row + i][column + i] == player for i in range (5)):
-              return True
-
-   # Check top-right to bottom-left diagonal
-   for row in range(number_of_rows - 4):
-       for column in range(4, number_of_columns):
-       #Check if there are 5 consecutive bricks for the same player in a top-left to bottom-right diagonal
-           if all(Cave[row][column - i] == player for i in range (5)):
-              return True
-
-   #No win condition found
-   return False
-
-def check_draw():
-    #Check if all cells are occupied
+    
+    #Check horizontally if the player has 5 bricks in a row
     for row in range(number_of_rows):
-        for column in range(number_of_columns):
-            if Cave[row][column] == ' ':
-                return False
-    return True
+        if np.count_nonzero(Cave[row] == player) >= 5:
+            return True
+    
+    #Check vertically if the player has 5 bricks in a row
+    for column in range(number_of_columns):
+        if np.count_nonzero(Cave[:,column] == player) >= 5:
+            return True
+    
+    #Check diagonally if the player has 5 bricks in a row (from left to right)
+    for i in range(-4, 5):
+        if np.count_nonzero(np.diagonal(Cave, i) == player) >= 5:
+            return True
+    
+    #Check diagonally if the player has 5 bricks in a row (from right to left)
+    for i in range(-4, 5):
+        if np.count_nonzero(np.diagonal(np.fliplr(Cave), i) == player) >= 5:
+            return True
+    
+    return False
+def check_draw():
+    #Check if all cells are occupied (full board)
+    return np.count_nonzero(Cave == ' ') == 0
 
 def is_valid_move(move):
     # a move is valid if it is a letter followed by a number
     if len(move) != 2:
-        print("The move should be a letter followed by a number (e.g. A1)")
+        print("The move should be a letter followed by a number")
         return False
     
     column = move[0]
@@ -118,12 +97,8 @@ def is_valid_move(move):
 
 def update_cave(move, player):
     #Update the cave (the board) with the move
-    column = move[0]
-    row = move[1]
-
-    column = ord(column) - ord('A')
-    row = int(row) - 1
-
+    column = ord(move[0].upper()) - ord('A')
+    row = int(move[1]) - 1
     Cave[row][column] = player
 
 

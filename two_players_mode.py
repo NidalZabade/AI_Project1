@@ -8,7 +8,6 @@ def manual_entry_for_both():
     while True:
         # Display the board
         display_cave()
-
         # Get the player's move
         move = input(f"Player {current_player} turn, enter your move (e.g., A1): ")
         # Convert the column letter to a numerical index for the board, (column A corresponds to index 0, column B  to index 1 and so on)
@@ -20,9 +19,9 @@ def manual_entry_for_both():
         if is_valid_move(move):
             # Place the brick in the chosen cell
             Cave[row][column] = current_player
-
             # Check if the current player has won
             if check_win(current_player):
+                display_cave()
                 print(f"Player {current_player} wins!")
                 break
 
@@ -40,3 +39,4 @@ def manual_entry_for_both():
         if check_draw():
             print("The game ends in a tie!")
             break
+        
