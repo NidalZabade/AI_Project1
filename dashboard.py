@@ -28,10 +28,8 @@ def display_cave(board):
     print(column_labels)
 
 
-# Check for a win
 def check_win(player, board):
     # Check horizontally if the player has 5 bricks in a row .e.g. "WWWWW" not "WWWW  W"
-
     for row in range(number_of_rows):
         row_string = "".join(board[row, :])
         if player * 5 in row_string:
@@ -44,16 +42,21 @@ def check_win(player, board):
             return True
 
     # Check diagonally if the player has 5 bricks in a row (from left to right)
-    for i in range(-4, 5):
-        if np.count_nonzero(np.diagonal(board, i) == player) >= 5:
-            return True
+    for row in range(number_of_rows - 4):
+        for column in range(number_of_columns - 4):
+            diagonal = [board[row+i][column+i] for i in range(5)]
+            if "".join(diagonal) == player * 5:
+                return True
 
     # Check diagonally if the player has 5 bricks in a row (from right to left)
-    for i in range(-4, 5):
-        if np.count_nonzero(np.diagonal(np.fliplr(board), i) == player) >= 5:
-            return True
+    for row in range(number_of_rows - 4):
+        for column in range(4, number_of_columns):
+            diagonal = [board[row+i][column-i] for i in range(5)]
+            if "".join(diagonal) == player * 5:
+                return True
 
     return False
+
 
 
 def check_draw(board):
@@ -171,4 +174,5 @@ def enter_move(player):
 
     # Update the cave (the board) with the move
     Cave = update_cave(move, Cave, player)
+    
 
