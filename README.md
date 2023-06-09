@@ -7,7 +7,7 @@
 - [x] Check valid move
 - [x] Check draw condition
 - [x] Create two player mode
-- [ ] Implement Heuristic
+- [x] Implement Heuristic
 - [ ] Implement Minimax
 - [ ] Implement Alpha-Beta Pruning
 - [ ] Create AI

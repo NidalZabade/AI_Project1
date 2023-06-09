@@ -1,3 +1,7 @@
-global-exclude __pycache__
+*.pyc
+__pycache__/
 
-.txt
+# txt
+*.txt
+
+test.py
