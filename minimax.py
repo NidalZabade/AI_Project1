@@ -48,48 +48,61 @@ def generate_tree(root, player_symbol, depth):
 
 def find_best_move(node, depth, maximizing_player, minimizing_player):
     # Implement the minimax algorithm to find the best move
-    best_score = float('-inf')
+    best_score = float("-inf")
     best_move = None
     for child in node.get_children():
         score = minimax(child, depth - 1, False, maximizing_player, minimizing_player)
         if score > best_score:
             best_score = score
-            best_move = child.last_move  # Access the last move stored in the Node's attribute
+            best_move = (
+                child.last_move
+            )  # Access the last move stored in the Node's attribute
     return best_move
 
 
 def minimax(node, depth, is_maximizing, maximizing_player, minimizing_player):
-    if depth == 0 or check_win(maximizing_player, node.get_board()) or check_win(minimizing_player, node.get_board()) or check_draw(node.get_board()):
+    if (
+        depth == 0
+        or check_win(maximizing_player, node.get_board())
+        or check_win(minimizing_player, node.get_board())
+        or check_draw(node.get_board())
+    ):
         return heuristic(node.get_board(), maximizing_player, minimizing_player)
 
     if is_maximizing:
-        best_score = float('-inf')
+        best_score = float("-inf")
         for child in node.get_children():
-            score = minimax(child, depth - 1, False, maximizing_player, minimizing_player)
+            score = minimax(
+                child, depth - 1, False, maximizing_player, minimizing_player
+            )
             best_score = max(best_score, score)
             if best_score == 100:  # Immediate win
                 break
         return best_score
     else:
-        best_score = float('inf')
+        best_score = float("inf")
         for child in node.get_children():
-            score = minimax(child, depth - 1, True, maximizing_player, minimizing_player)
+            score = minimax(
+                child, depth - 1, True, maximizing_player, minimizing_player
+            )
             best_score = min(best_score, score)
             if best_score == -100:  # Immediate loss
                 break
         return best_score
 
 
-board = np.array([
-    ["B", "B", "B", "B", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", "W", " ", " ", " ", " "],
-    ["B", "W", "W", " ", " ", " ", " ", " "],
-    ["B", "W", " ", " ", " ", " ", " ", " "],
-    ["W", " ", " ", " ", " ", " ", " ", " "]
-])
+board = np.array(
+    [
+        ["B", "B", "B", "B", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", " ", " ", " ", " ", " "],
+        [" ", " ", " ", "W", " ", " ", " ", " "],
+        ["B", "W", "W", " ", " ", " ", " ", " "],
+        ["B", "W", " ", " ", " ", " ", " ", " "],
+        ["W", " ", " ", " ", " ", " ", " ", " "],
+    ]
+)
 
 tree_depth = 3
 root = Node(board)
