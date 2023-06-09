@@ -171,3 +171,4 @@ def enter_move(player):
 
     # Update the cave (the board) with the move
     Cave = update_cave(move, Cave, player)
+
