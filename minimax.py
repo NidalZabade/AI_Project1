@@ -54,9 +54,7 @@ def find_best_move(node, depth, maximizing_player, minimizing_player):
         score = minimax(child, depth - 1, False, maximizing_player, minimizing_player)
         if score > best_score:
             best_score = score
-            best_move = (
-                child.last_move
-            )  # Access the last move stored in the Node's attribute
+            best_move = (child.last_move)  # Access the last move stored in the Node's attribute
     return best_move
 
 
