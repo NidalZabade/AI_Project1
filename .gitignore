@@ -1,1 +1,3 @@
 global-exclude __pycache__
+
+.txt

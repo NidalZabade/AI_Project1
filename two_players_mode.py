@@ -1,12 +1,13 @@
-from dashboard import display_cave, Cave, is_valid_move, check_win, check_draw
+from dashboard import display_cave, Cave, is_valid_move, check_win, check_draw, get_possible_valid_moves
 
 
 # manual entry for both ■’s moves and □’s moves
 def manual_entry_for_both():
     # □ starts, followed by ■, then □ again,then ■ again, ...
-    current_player = '□'
+    current_player = 'B'
     while True:
-        # Display the board
+        # Display the board and all the possible moves
+        print("Possible moves: ", get_possible_valid_moves(Cave))
         display_cave()
         # Get the player's move
         move = input(f"Player {current_player} turn, enter your move (e.g., A1): ")
@@ -26,11 +27,11 @@ def manual_entry_for_both():
                 break
 
             # Switch to the next Player
-            if current_player == '□':
-                current_player = '■'
+            if current_player == 'B':
+                current_player = 'W'
 
             else:
-                current_player = '□'
+                current_player = 'B'
 
         else:
             print("Invalid move :(, try again!")
@@ -39,4 +40,6 @@ def manual_entry_for_both():
         if check_draw():
             print("The game ends in a tie!")
             break
+    
         
+manual_entry_for_both()  
