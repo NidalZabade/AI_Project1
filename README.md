@@ -8,8 +8,8 @@
 - [x] Check draw condition
 - [x] Create two player mode
 - [x] Implement Heuristic
-- [ ] Implement Minimax
+- [x] Implement Minimax
 - [ ] Implement Alpha-Beta Pruning
-- [ ] Create AI
-- [ ] Improve AI
+- [x] Create AI
+- [x] Improve AI
 - [ ] Create GUI (optional)
