@@ -126,35 +126,20 @@ def get_possible_valid_moves(board):
 
 
 def get_max_consecutive_bricks(board, player):
-    # Initialize the max number of consecutive bricks to 0
     max_consecutive_bricks = 0
+    current_consecutive_bricks = 0
 
-    # Check horizontally if the player has 5 bricks in a row
-    for row in range(number_of_rows):
-        max_consecutive_bricks = max(
-            max_consecutive_bricks, np.count_nonzero(board[row, :] == player)
-        )
+    for i in range(len(board)):
+        if board[i] == player:
+            current_consecutive_bricks += 1
+        else:
+            max_consecutive_bricks = max(max_consecutive_bricks, current_consecutive_bricks)
+            current_consecutive_bricks = 0
 
-    # Check vertically if the player has 5 bricks in a row
-    for column in range(number_of_columns):
-        max_consecutive_bricks = max(
-            max_consecutive_bricks, np.count_nonzero(board[:, column] == player)
-        )
-
-    # Check diagonally if the player has 5 bricks in a row (from left to right)
-    for i in range(-4, 5):
-        max_consecutive_bricks = max(
-            max_consecutive_bricks, np.count_nonzero(np.diagonal(board, i) == player)
-        )
-
-    # Check diagonally if the player has 5 bricks in a row (from right to left)
-    for i in range(-4, 5):
-        max_consecutive_bricks = max(
-            max_consecutive_bricks,
-            np.count_nonzero(np.diagonal(np.fliplr(board), i) == player),
-        )
+    max_consecutive_bricks = max(max_consecutive_bricks, current_consecutive_bricks)
 
     return max_consecutive_bricks
+
 
 
 def enter_move(player):
