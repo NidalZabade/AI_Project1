@@ -5,7 +5,8 @@ import numpy as np
 class Node:
     def __init__(self, board):
         self.board = board
-        self.children = np.array([])
+        self.last_move = None
+        self.children: Node = np.array([])
 
     def add_child(self, child):
         self.children = np.append(self.children, child)
@@ -20,5 +21,6 @@ class Node:
         display_cave(self.board)
         for child in self.children:
             child.print_tree()
+
     def is_leaf(self):
         return len(self.children) == 0

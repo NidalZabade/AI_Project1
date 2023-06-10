@@ -42,21 +42,18 @@ def check_win(player, board):
             return True
 
     # Check diagonally if the player has 5 bricks in a row (from left to right)
-    for row in range(number_of_rows - 4):
-        for column in range(number_of_columns - 4):
-            diagonal = [board[row+i][column+i] for i in range(5)]
-            if "".join(diagonal) == player * 5:
-                return True
+    for diagonal in range(-4, 5):
+        diagonal_string = "".join(board.diagonal(diagonal))
+        if player * 5 in diagonal_string:
+            return True
 
     # Check diagonally if the player has 5 bricks in a row (from right to left)
-    for row in range(number_of_rows - 4):
-        for column in range(4, number_of_columns):
-            diagonal = [board[row+i][column-i] for i in range(5)]
-            if "".join(diagonal) == player * 5:
-                return True
+    for diagonal in range(-4, 5):
+        diagonal_string = "".join(np.fliplr(board).diagonal(diagonal))
+        if player * 5 in diagonal_string:
+            return True
 
     return False
-
 
 
 def check_draw(board):
@@ -135,7 +132,7 @@ def get_max_consecutive_bricks(board, player):
     # Check horizontally if the player has 5 bricks in a row
     for row in range(number_of_rows):
         max_consecutive_bricks = max(
-            max_consecutive_bricks, np.count_nonzero(board[row] == player)
+            max_consecutive_bricks, np.count_nonzero(board[row, :] == player)
         )
 
     # Check vertically if the player has 5 bricks in a row
@@ -174,5 +171,3 @@ def enter_move(player):
 
     # Update the cave (the board) with the move
     Cave = update_cave(move, Cave, player)
-    
-
