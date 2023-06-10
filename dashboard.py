@@ -4,9 +4,6 @@ import numpy as np
 number_of_rows = 8
 number_of_columns = 8
 
-# Initialize the cave (the board) with empty spaces (Initially its Empty) for the 2 players mode
-Cave = np.full((number_of_rows, number_of_columns), " ")
-
 
 # Display the cave (the board)
 def display_cave(board):
@@ -100,6 +97,7 @@ def is_valid_move(move, board):
 
 def update_cave(move, board, player):
     # Update the cave (the board) with the move
+    print(f"Player {player} moves to {move}")
     column = ord(move[0].upper()) - ord("A")
     row = int(move[1]) - 1
     board[row][column] = player
@@ -133,7 +131,9 @@ def get_max_consecutive_bricks(board, player):
         if board[i] == player:
             current_consecutive_bricks += 1
         else:
-            max_consecutive_bricks = max(max_consecutive_bricks, current_consecutive_bricks)
+            max_consecutive_bricks = max(
+                max_consecutive_bricks, current_consecutive_bricks
+            )
             current_consecutive_bricks = 0
 
     max_consecutive_bricks = max(max_consecutive_bricks, current_consecutive_bricks)
@@ -141,18 +141,19 @@ def get_max_consecutive_bricks(board, player):
     return max_consecutive_bricks
 
 
-
-def enter_move(player):
+def enter_move(board, player):
     # Ask the player to enter a move
     move = input(f"Player {player}, enter your move: ")
 
-    valid_move, message = is_valid_move(move)
+    valid_move, message = is_valid_move(move, board)
 
     # Keep asking the player to enter a move until the move is valid
     while not valid_move:
         print(message)
         move = input(f"Player {player}, enter your move: ")
-        valid_move, message = is_valid_move(move)
+        valid_move, message = is_valid_move(move, board)
 
     # Update the cave (the board) with the move
-    Cave = update_cave(move, Cave, player)
+    board = update_cave(move, board, player)
+    display_cave(board)
+    return board

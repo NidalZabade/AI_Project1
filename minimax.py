@@ -27,16 +27,19 @@ def generate_tree(node, player_symbol, depth):
 
 
 def minimax(node, depth, is_maximizing_player, maximizing_player, minimizing_player):
-    if depth == 0 or check_win(maximizing_player, node.get_board()) or check_win(minimizing_player, node.get_board()) or check_draw(node.get_board()):
+    if (
+        depth == 0
+        or check_win(maximizing_player, node.get_board())
+        or check_win(minimizing_player, node.get_board())
+        or check_draw(node.get_board())
+    ):
         maximizing_player_wins = check_win(maximizing_player, node.get_board())
         minimizing_player_wins = check_win(minimizing_player, node.get_board())
         is_draw = check_draw(node.get_board())
-        
-        
-        #if maximizing_player_wins and minimizing_player_wins:
-            #return 0, 0  # Game is a draw
-            
-            
+
+        # if maximizing_player_wins and minimizing_player_wins:
+        # return 0, 0  # Game is a draw
+
         if maximizing_player_wins:
             return float("inf"), 0  # Max player wins
         if minimizing_player_wins:
@@ -49,7 +52,9 @@ def minimax(node, depth, is_maximizing_player, maximizing_player, minimizing_pla
         best_score = float("-inf")
         best_move_count = 0
         for child in node.children:
-            score, move_count = minimax(child, depth - 1, False, maximizing_player, minimizing_player)
+            score, move_count = minimax(
+                child, depth - 1, False, maximizing_player, minimizing_player
+            )
             best_score = max(score, best_score)
             if score == best_score:
                 best_move_count += move_count
@@ -58,7 +63,9 @@ def minimax(node, depth, is_maximizing_player, maximizing_player, minimizing_pla
         best_score = float("inf")
         best_move_count = 0
         for child in node.children:
-            score, move_count = minimax(child, depth - 1, True, maximizing_player, minimizing_player)
+            score, move_count = minimax(
+                child, depth - 1, True, maximizing_player, minimizing_player
+            )
             best_score = min(score, best_score)
             if score == best_score:
                 best_move_count += move_count
@@ -72,53 +79,79 @@ def heuristic(board, player):
     # Check horizontally for consecutive bricks
     for row in range(number_of_rows):
         for column in range(number_of_columns - 4 + 1):
-            window = list(board[row, column:column + 5])
+            window = list(board[row, column : column + 5])
             if window.count(player) == 5:
                 return float("inf")  # Return maximum score if the player wins
             elif window.count(player) == 0 and window.count(" ") == 5:
                 opponent_score += 1
             elif window.count(player) == 4 and window.count(" ") == 1:
-                if column > 0 and board[row, column - 1] == " " and column + 5 < number_of_columns and board[
-                    row, column + 5] == " ":
+                if (
+                    column > 0
+                    and board[row, column - 1] == " "
+                    and column + 5 < number_of_columns
+                    and board[row, column + 5] == " "
+                ):
                     opponent_score += 1
 
     # Check vertically for consecutive bricks
     for column in range(number_of_columns):
         for row in range(number_of_rows - 4 + 1):
-            window = list(board[row:row + 5, column])
+            window = list(board[row : row + 5, column])
             if window.count(player) == 5:
                 return float("inf")  # Return maximum score if the player wins
             elif window.count(player) == 0 and window.count(" ") == 5:
                 opponent_score += 1
             elif window.count(player) == 4 and window.count(" ") == 1:
-                if row > 0 and board[row - 1, column] == " " and row + 5 < number_of_rows and board[
-                    row + 5, column] == " ":
+                if (
+                    row > 0
+                    and board[row - 1, column] == " "
+                    and row + 5 < number_of_rows
+                    and board[row + 5, column] == " "
+                ):
                     opponent_score += 1
 
     # Check diagonally from top-left to bottom-right
     for row in range(number_of_rows - 4 + 1):
         for column in range(number_of_columns - 4 + 1):
-            window = list(board[row:row + 5, column:column + 5].diagonal())
+            window = list(board[row : row + 5, column : column + 5].diagonal())
             if window.count(player) == 5:
                 return float("inf")  # Return maximum score if the player wins
             elif window.count(player) == 0 and window.count(" ") == 5:
                 opponent_score += 1
             elif window.count(player) == 4 and window.count(" ") == 1:
-                if row > 0 and column > 0 and board[row - 1, column - 1] == " " and row + 5 < number_of_rows and board[
-                    row + 5, column + 5] == " ":
+                if (
+                    row > 0
+                    and column > 0
+                    and board[row - 1, column - 1] == " "
+                    and row + 5 < number_of_rows
+                    and board[row + 5, column + 5] == " "
+                ):
                     opponent_score += 1
 
     return opponent_score  # Return the opponent's score if no winning move found
 
 
-def find_best_move(root, depth, is_maximizing_player, maximizing_player, minimizing_player):
-    best_score, best_move_count = minimax(root, depth, is_maximizing_player, maximizing_player, minimizing_player)
+def find_best_move(
+    root: Node, depth, is_maximizing_player, maximizing_player, minimizing_player
+):
+    best_score, best_move_count = minimax(
+        root, depth, is_maximizing_player, maximizing_player, minimizing_player
+    )
     best_move = None
     for child in root.children:
-        score, move_count = minimax(child, depth - 1, False, maximizing_player, minimizing_player)
+        score, move_count = minimax(
+            child, depth - 1, False, maximizing_player, minimizing_player
+        )
         if score == best_score and move_count == best_move_count:
             best_move = child.last_move
             break
+    return best_move
+
+
+def AI_move(board, player, depth):
+    root = Node(board)
+    generate_tree(root, player, depth)
+    best_move = find_best_move(root, depth, True, player, "W" if player == "B" else "B")
     return best_move
 
 
