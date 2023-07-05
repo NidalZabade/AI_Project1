@@ -2,20 +2,47 @@
 
 ## Description
 
-This is a project for the course Artificial Intelligence (ENCS3340). The goal of this project is to create an AI that can play Magnetic Cave game. The AI will be created using the Minimax algorithm.
+This is a project for the course Artificial Intelligence (ENCS3340). The goal of this project is to create an AI that can play Magnetic Cave game. The AI will be created using the Minimax algorithm. The project is written in Python.
 
-- [Project Description](AI_project.pdf)
+- [Project Description](./assets/AI_project.pdf)
 
-## Requirements
+## Project Structure
 
-- Python 3.6 or higher
-- Numpy `pip install numpy`
+```bash
+AI_Project1
+├── assets
+│   └── AI_project.pdf
+├── docs
+│   └── AI_Report.pdf
+├── src
+│   ├── dashboard.py
+│   ├── minimax.py
+│   ├── tree.py
+│   └── two_player_mode.py
+├── .gitignore
+├── README.md
+└── requirements.txt
+```
 
-## Usage
+## Installation and Running
 
-To run the program, run the following command in the terminal:
+To install the required packages, run the following command in the terminal:
 
-`python two_player_mode.py`
+```bash
+git clone https://github.com/NidalZabade/AI_Project1.git
+cd AI_Project1
+```
+
+To install the required packages, run the following command in the terminal:
+
+`pip install -r requirements.txt`
+
+Run the program using the following command in the terminal:
+
+```bash
+cd src
+python two_player_mode.py
+```
 
 ## Tasks
 
