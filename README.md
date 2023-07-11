@@ -26,7 +26,7 @@ AI_Project1
 
 ## Installation and Running
 
-To install the required packages, run the following command in the terminal:
+To install the project, run the following command in the terminal:
 
 ```bash
 git clone https://github.com/NidalZabade/AI_Project1.git
