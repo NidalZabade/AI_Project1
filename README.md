@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a project for the course Artificial Intelligence (ENCS3340). The goal of this project is to create an AI that can play Magnetic Cave game. The AI will be created using the Minimax algorithm. The project is written in Python.
+This is the first project for the course Artificial Intelligence (ENCS3340). The goal of this project is to create an AI that can play Magnetic Cave game. The AI will be created using the Minimax algorithm. The project is written in Python.
 
 - [Project Description](./assets/AI_project.pdf)
 
