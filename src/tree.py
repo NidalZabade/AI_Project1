@@ -1,5 +1,6 @@
 from dashboard import display_cave
 import numpy as np
+import pandas as pd
 
 
 class Node:
